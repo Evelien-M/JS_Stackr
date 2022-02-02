@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="canvas/Canvas.js"></script>
+        <script type="text/javascript" src="canvas/Hall1.js"></script>
+        <script type="text/javascript" src="canvas/GridContent/ParkingSpot.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+<body>
+
+<div class="container-fluid">
+
+        <canvas id="canvas" style="margin-top: 15px; border:1px solid #000000;">
+        Your browser does not support the HTML canvas tag.
+        </canvas>
+        <script>
+            window.onload = function () {
+            Canvas();
+        }
+        </script>
+        <div class="form">
+            <form>
+                <h1>Formulier</h1>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Lengte</label>
+                  <input type="number" class="form-control" id="exampleInputEmail1" max=15>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Breedte</label>
+                  <input type="number" class="form-control" id="exampleInputPassword1" max=2>
+                </div>
+                <div class="form-group">
+                    <label for="intervall">Aankomst interval</label>
+                    <input type="number" class="form-control" id="intervall" max=200>
+                  </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Type</label>
+                    <select class="form-control">
+                        <option>Koud transport</option>
+                        <option>Breekbaar transport</option>
+                        <option>Algemeen transport</option>
+                        <option>Pallets</option>
+                        <option>Snelkoerier</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Actieradius</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1">
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+</div>
+
+</body>
+</html>

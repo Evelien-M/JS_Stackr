@@ -1,0 +1,13 @@
+.container-fluid {
+    display: inline-block;
+}
+
+.canvas {
+    float: left;
+}
+
+.form {
+    margin-right: 15px;
+    float: left;
+    max-width: 300px;
+}
