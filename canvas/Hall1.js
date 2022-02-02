@@ -5,7 +5,7 @@ class HallOne {
         this.ctx = ctx;
 
         this.parkingspots = Array(8);
-        this.grid = Array.from(Array(15), () => new Array(9));
+        this.grid = Array.from(Array(15), () => new Array(8));
         this.cellSize = 90;
         this.AddParkingSpots();
     }
