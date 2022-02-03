@@ -7,6 +7,8 @@ function Canvas()
     this.canvasHolder.height = 810;
     this.assamblyList = new AssemblyList(this.canvasHolder,this.ctx);
     Update();
+
+    
 }
 
 
@@ -16,7 +18,7 @@ function Update()
     
     this.start.Update();
     this.start.Draw();
-    this.assamblyList.Update();
+    this.assamblyList.Update(this.start.grid);
     this.assamblyList.Draw();
     this.ctx.restore();
 

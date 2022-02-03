@@ -22,6 +22,8 @@ class HallOne {
 
     DrawGrid()
     {
+        this.ctx.fillStyle = "#FFF";
+        this.ctx.fillRect(0, 0, this.canvasHolder.width, this.canvasHolder.height);
         for(let x = 0; x < this.grid.length; x++) 
         {
             for(let y = 0; y < this.grid[x].length; y++) 

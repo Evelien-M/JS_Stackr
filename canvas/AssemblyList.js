@@ -5,11 +5,17 @@ class AssemblyList
         this.canvasHolder = canvasHolder;
         this.ctx = ctx;
         this.CreateAsseblyList();
+
+        canvasHolder.onmousemove = (e) => this.MouseMove(e);
+        canvasHolder.onmousedown = (e) => this.MouseDown(e);
+        canvasHolder.onmouseup = (e) => this.MouseUp(e); 
+
+        this.DraggableObject = null;
     }
 
-    Update()
+    Update(grid)
     {
-
+        this.grid = grid;
     }
     Draw()
     {
@@ -19,6 +25,14 @@ class AssemblyList
         this.ctx.fillRect(0, 720, this.canvasHolder.width, 90);
 
         this.DrawAssemblyList();
+
+        if(this.DraggableObject != null)
+        {
+            let bg = new Image(); // Creating image objects
+            bg.src = this.DraggableObject.background;
+            this.ctx.drawImage(bg,this.DraggableObject.posX,this.DraggableObject.posY);
+        }
+
     }
 
 
@@ -49,6 +63,33 @@ class AssemblyList
                 bg.src = this.list[i].background;
                 this.ctx.drawImage(bg,i * 90,this.canvasHolder.height - 90);
             }
+        }
+    }
+
+    MouseDown(e)
+    {
+        if(e.clientY < this.canvasHolder.height && e.clientY > this.canvasHolder.height - 90)
+        {
+            for(let i = 0; i < this.list.length; i++)
+            {
+                if(e.offsetX > i * 90 && e.offsetX < (i * 90) + 90)
+                {
+                    this.DraggableObject = this.list[i];
+                }
+            }
+        }
+    }
+    MouseUp(e)
+    {
+        this.DraggableObject = null;
+    }
+
+    MouseMove(e)
+    {
+        if(this.DraggableObject != null)
+        {
+            this.DraggableObject.posX = e.offsetX - 45;
+            this.DraggableObject.posY = e.offsetY - 45;
         }
     }
 }
