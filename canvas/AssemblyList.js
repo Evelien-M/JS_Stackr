@@ -25,7 +25,18 @@ class AssemblyList
     CreateAsseblyList()
     {
         this.list = Array(12);
-        this.list[0] = new StraightSN();
+        this.list[0] = new StraightNS();
+        this.list[1] = new StraightSN();
+        this.list[2] = new StraightEW();
+        this.list[3] = new StraightWE();
+        this.list[4] = new CornerEN();
+        this.list[5] = new CornerES();
+        this.list[6] = new CornerNE();
+        this.list[7] = new CornerNW();
+        this.list[8] = new CornerSE();
+        this.list[9] = new CornerSW();
+        this.list[10] = new CornerWN();
+        this.list[11] = new CornerWS();
     }
 
     DrawAssemblyList()
@@ -36,7 +47,7 @@ class AssemblyList
             {
                 let bg = new Image(); // Creating image objects
                 bg.src = this.list[i].background;
-                this.ctx.drawImage(bg,0,this.canvasHolder.height - 90);
+                this.ctx.drawImage(bg,i * 90,this.canvasHolder.height - 90);
             }
         }
     }
