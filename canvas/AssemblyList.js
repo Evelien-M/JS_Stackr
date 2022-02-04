@@ -81,7 +81,27 @@ class AssemblyList
     }
     MouseUp(e)
     {
-        this.DraggableObject = null;
+        if (this.DraggableObject != null)
+        {
+            if (e.offsetX > 0 && e.offsetX < this.grid.length * 90 &&
+                e.offsetY > 0 && e.offsetY < this.grid[0].length * 90)
+            {   
+                let x = Math.round((e.offsetX - 45) / 90);
+                let y = Math.round((e.offsetY - 45) / 90);
+                this.grid[x][y] = this.DraggableObject;
+                this.DraggableObject.posX = 0;
+                this.DraggableObject.posY = 0;
+                this.DraggableObject = null;
+            }
+            else
+            {
+                this.DraggableObject.posX = 0;
+                this.DraggableObject.posY = 0;
+                this.DraggableObject = null;
+            }
+        }
+        
+
     }
 
     MouseMove(e)

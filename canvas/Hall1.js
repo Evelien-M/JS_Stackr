@@ -35,8 +35,11 @@ class HallOne {
 
                 if (this.grid[x][y] != undefined)
                 {
-                    this.ctx.fillStyle = this.grid[x][y].background; 
-                    this.ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+                    let bg = new Image(); // Creating image objects
+                    bg.src = this.grid[x][y].background;
+                    this.ctx.drawImage(bg,x * this.cellSize, y * this.cellSize);
+                   // this.ctx.fillStyle = this.grid[x][y].background; 
+                  //  this.ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
                 }
             }
         }

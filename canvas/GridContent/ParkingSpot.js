@@ -2,7 +2,7 @@ class ParkingsSpot
 {
     constructor()
     {
-        this.background = "#CCC";
+        this.background = "img/parkingspot.png";;
         this.content = null;
     }
 }
