@@ -68,6 +68,7 @@ class AssemblyList
 
     MouseDown(e)
     {
+        // checks if mouse is in the assembly 
         if(e.clientY < this.canvasHolder.height && e.clientY > this.canvasHolder.height - 90)
         {
             for(let i = 0; i < this.list.length; i++)
@@ -75,8 +76,23 @@ class AssemblyList
                 if(e.offsetX > i * 90 && e.offsetX < (i * 90) + 90)
                 {
                     this.DraggableObject = this.list[i];
+                    this.DraggableObject.posX = e.offsetX - 45;
+                    this.DraggableObject.posY = e.offsetY - 45;
                 }
             }
+        }
+        // checks if mouse is in the grid
+        if (e.clientY > 0 && e.clientY < this.canvasHolder.height - 90)
+        {
+           let x = Math.round((e.offsetX - 45) / 90);
+           let y = Math.round((e.offsetY - 45) / 90);
+           if(this.grid[x][y] != undefined)
+           {
+               this.DraggableObject = this.grid[x][y];
+               this.DraggableObject.posX = e.offsetX - 45;
+               this.DraggableObject.posY = e.offsetY - 45;
+               this.grid[x][y] = undefined;
+           }
         }
     }
     MouseUp(e)
@@ -89,8 +105,8 @@ class AssemblyList
                 let x = Math.round((e.offsetX - 45) / 90);
                 let y = Math.round((e.offsetY - 45) / 90);
                 this.grid[x][y] = this.DraggableObject;
-                this.DraggableObject.posX = 0;
-                this.DraggableObject.posY = 0;
+                this.DraggableObject.posX = e.offsetX - 45;
+                this.DraggableObject.posY = e.offsetY - 45;
                 this.DraggableObject = null;
             }
             else
