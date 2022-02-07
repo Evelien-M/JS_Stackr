@@ -8,6 +8,7 @@ class HallOne {
         this.grid = Array.from(Array(15), () => new Array(8));
         this.cellSize = 90;
         this.AddParkingSpots();
+        this.AddPackageDropper();
     }
 
     Update()
@@ -59,6 +60,12 @@ class HallOne {
                 }
             }
         }
+    }
+
+    AddPackageDropper()
+    {
+        this.grid[this.grid.length - 1][this.grid[0].length - 1] = new PackageDropper();
+
     }
 
     DrawParkingSpot()
