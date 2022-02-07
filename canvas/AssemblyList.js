@@ -1,6 +1,6 @@
 class AssemblyList
 {
-    constructor(canvasHolder,ctx)
+    constructor(canvasHolder,ctx,grid)
     {
         this.canvasHolder = canvasHolder;
         this.ctx = ctx;
@@ -38,7 +38,7 @@ class AssemblyList
 
     CreateAsseblyList()
     {
-        this.list = Array(12);
+        this.list = Array(4);
         this.list[0] = new StraightNS();
         this.list[1] = new StraightSN();
         this.list[2] = new StraightEW();
@@ -102,7 +102,7 @@ class AssemblyList
                 if(this.grid[x][y] == undefined)
                 { 
                     this.grid[x][y] = this.DraggableObject;
-                    this.CreateLinkedList(x,y,this.DraggableObject);
+                    this.CreateLinkedList();
                     this.DraggableObject.posX = e.offsetX - 45;
                     this.DraggableObject.posY = e.offsetY - 45;
                     this.DraggableObject = null;
@@ -144,46 +144,75 @@ class AssemblyList
         }
         return null;
     }
-    CreateLinkedList(x,y,object)
+    CreateLinkedList()
     {
-        if(object.s == 1)
+        for(let x = 0; x < this.grid.length; x++) 
         {
-            if(y-1 > 0 && this.grid[x][y-1] != null)
-                object.next = this.grid[x][y-1];
-                
-            if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
-                this.grid[x][y+1].next = object;
-            
-            return;
+            for(let y = 0; y < this.grid[x].length; y++) 
+            {
+                let object = this.grid[x][y];
+                if(object != undefined && object.moveable)
+                {
+                    console.log(this.grid[x][y-1]);
+                    if(object.s == 1)
+                    {
+                        if(y+1 != this.grid[0].length && this.grid[x][y+1] != null)
+                            object.next = this.grid[x][y+1];
+                        
+                        if (y-1 > 0 && this.grid[x][y-1] != undefined)
+                            if(this.grid[x][y-1].s == 1)
+                                this.grid[x][y-1].next = object;
+                        
+                        continue;
+                    }
+                    if(object.n == 1)
+                    {
+                        if(y-1 > 0 && this.grid[x][y-1] != null)
+                            object.next = this.grid[x][y-1];
+                            
+                        if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
+                            if(this.grid[x][y+1].n == 1)
+                                this.grid[x][y+1].next = object;
+                        
+                        continue;
+                    }
+                    if (object.w == 1)
+                    {
+                        if( this.grid[x-1][y] != undefined)
+                        {
+                            object.next = this.grid[x-1][y];
+                            console.log(object.next)
+                        }
+                        if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
+                            if(this.grid[x+1][y].w == 1)
+                                this.grid[x+1][y].next = object;
+                        
+                        continue;
+                    }
+                    if (object.e == 1)
+                    {
+                        if(x+1 != this.grid.length && this.grid[x+1][y] != null)
+                        {
+                            object.next = this.grid[x+1][y];
+                            console.log(object.next)
+                        }
+                            
+                        if(x-1 > 0 && this.grid[x-1][y] != undefined)
+                            if(this.grid[x-1][y].e == 1)
+                                this.grid[x-1][y].next = object;
+                    
+                        continue;
+                    }
+                }
+            }
         }
-        if(object.n == 1)
-        {
-            if(y+1 != this.grid[0].length && this.grid[x][y+1] != null)
-                object.next = this.grid[x][y+1];
-            
-            if (y-1 > 0 && this.grid[x][y-1] != undefined)
-                this.grid[x][y-1].next = object;
-            
-            return;
-        }
-        if (object.w == 1)
-        {
-            if(x-1 > 0 && this.grid[x-1][y] != undefined)
-                object.next = this.grid[x-1][y];
-            if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
-                this.grid[x+1][y].next = object;
-            
-            return;
-        }
-        if (object.e == 1)
-        {
-            if(x+1 != this.grid.length && this.grid[x+1][y] != null)
-                object.next = this.grid[x+1][y];
-                
-            if(x-1 > 0 && this.grid[x-1][y] != undefined)
-                this.grid[x-1][y].next = object;
+
+
+
+
+
+
+
         
-            return;
-        }
     }
 }

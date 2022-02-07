@@ -14,6 +14,7 @@ class HallOne {
     Update()
     {
         this.packageDropper.Next();
+        this.UpdateGrid();
     }
     Draw()
     {
@@ -50,6 +51,29 @@ class HallOne {
         }
     }
 
+    UpdateGrid()
+    {
+        for(let x = 0; x < this.grid.length; x++) 
+        {
+            for(let y = 0; y < this.grid[x].length; y++) 
+            {
+                if (this.grid[x][y] != undefined)
+                {
+                    if (this.grid[x][y].content != null)
+                    {
+                        if (this.grid[x][y].next != null)
+                        {
+                            if (this.grid[x][y].next.content == null && this.grid[x][y].next.moveable)
+                            {
+                                this.grid[x][y].next.content = this.grid[x][y].content;
+                                this.grid[x][y].content = null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     IsEven(n) {
         return n % 2 == 0;
      }
