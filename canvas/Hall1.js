@@ -13,7 +13,7 @@ class HallOne {
 
     Update()
     {
-
+        this.packageDropper.Next();
     }
     Draw()
     {
@@ -39,6 +39,12 @@ class HallOne {
                     let bg = new Image(); // Creating image objects
                     bg.src = this.grid[x][y].background;
                     this.ctx.drawImage(bg,x * this.cellSize, y * this.cellSize);
+                    if (this.grid[x][y].content != null)
+                    {
+                        let bg2 = new Image(); // Creating image objects
+                        bg2.src = this.grid[x][y].content.background;
+                        this.ctx.drawImage(bg2,x * this.cellSize, y * this.cellSize);
+                    }
                 }
             }
         }
@@ -65,7 +71,7 @@ class HallOne {
     AddPackageDropper()
     {
         this.grid[this.grid.length - 1][this.grid[0].length - 1] = new PackageDropper();
-
+        this.packageDropper = this.grid[this.grid.length - 1][this.grid[0].length - 1];
     }
 
     DrawParkingSpot()

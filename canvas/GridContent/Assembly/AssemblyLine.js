@@ -7,5 +7,6 @@ class AssemblyLine
         this.posX = null;
         this.posY = null;
         this.next = null;
+        this.moveable = true;
     }
 }
