@@ -9,7 +9,7 @@ class PackageDropper
         this.n = 0;
         this.w = 1;
         this.e = 0;
-        this.cooldown = 1000;
+        this.cooldown = 600;
     }
 
     Next()
@@ -17,13 +17,12 @@ class PackageDropper
         this.cooldown--;
         if (this.cooldown == 0)
         {
-            this.cooldown = 1000;
+            this.cooldown = 600;
             if(this.next != null)
             {
                 if (this.next.content == null)
                 {
                     this.next.content = new Package1();
-                    console.log(this.next);
                 }
             }
         }

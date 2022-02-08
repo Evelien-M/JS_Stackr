@@ -9,6 +9,7 @@ class HallOne {
         this.cellSize = 90;
         this.AddParkingSpots();
         this.AddPackageDropper();
+        this.updatetimer = 60;
     }
 
     Update()
@@ -53,20 +54,25 @@ class HallOne {
 
     UpdateGrid()
     {
-        for(let x = 0; x < this.grid.length; x++) 
+        this.updatetimer--;
+        if(this.updatetimer == 0)
         {
-            for(let y = 0; y < this.grid[x].length; y++) 
+            this.updatetimer = 60;
+            for(let x = 0; x < this.grid.length; x++) 
             {
-                if (this.grid[x][y] != undefined)
+                for(let y = 0; y < this.grid[x].length; y++) 
                 {
-                    if (this.grid[x][y].content != null)
+                    if (this.grid[x][y] != undefined)
                     {
-                        if (this.grid[x][y].next != null)
+                        if (this.grid[x][y].content != null)
                         {
-                            if (this.grid[x][y].next.content == null && this.grid[x][y].next.moveable)
+                            if (this.grid[x][y].next != null)
                             {
-                                this.grid[x][y].next.content = this.grid[x][y].content;
-                                this.grid[x][y].content = null;
+                                if (this.grid[x][y].next.content == null && this.grid[x][y].next.moveable)
+                                {
+                                    this.grid[x][y].next.content = this.grid[x][y].content;
+                                    this.grid[x][y].content = null;
+                                }
                             }
                         }
                     }

@@ -146,6 +146,9 @@ class AssemblyList
     }
     CreateLinkedList()
     {
+        // reset package dropper
+        this.grid[this.grid.length - 1][this.grid[0].length - 1].next = this.grid[this.grid.length - 2][this.grid[0].length - 1];
+
         for(let x = 0; x < this.grid.length; x++) 
         {
             for(let y = 0; y < this.grid[x].length; y++) 
@@ -153,15 +156,11 @@ class AssemblyList
                 let object = this.grid[x][y];
                 if(object != undefined && object.moveable)
                 {
-                    console.log(this.grid[x][y-1]);
+                    object.next = null;
                     if(object.s == 1)
                     {
-                        if(y+1 != this.grid[0].length && this.grid[x][y+1] != null)
+                        if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
                             object.next = this.grid[x][y+1];
-                        
-                        if (y-1 > 0 && this.grid[x][y-1] != undefined)
-                            if(this.grid[x][y-1].s == 1)
-                                this.grid[x][y-1].next = object;
                         
                         continue;
                     }
@@ -169,37 +168,20 @@ class AssemblyList
                     {
                         if(y-1 > 0 && this.grid[x][y-1] != null)
                             object.next = this.grid[x][y-1];
-                            
-                        if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
-                            if(this.grid[x][y+1].n == 1)
-                                this.grid[x][y+1].next = object;
-                        
+  
                         continue;
                     }
                     if (object.w == 1)
                     {
-                        if( this.grid[x-1][y] != undefined)
-                        {
+                        if(x-1 > 0 && this.grid[x-1][y] != undefined)
                             object.next = this.grid[x-1][y];
-                            console.log(object.next)
-                        }
-                        if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
-                            if(this.grid[x+1][y].w == 1)
-                                this.grid[x+1][y].next = object;
                         
                         continue;
                     }
                     if (object.e == 1)
                     {
-                        if(x+1 != this.grid.length && this.grid[x+1][y] != null)
-                        {
+                        if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
                             object.next = this.grid[x+1][y];
-                            console.log(object.next)
-                        }
-                            
-                        if(x-1 > 0 && this.grid[x-1][y] != undefined)
-                            if(this.grid[x-1][y].e == 1)
-                                this.grid[x-1][y].next = object;
                     
                         continue;
                     }
