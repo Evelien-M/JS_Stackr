@@ -146,6 +146,7 @@ class AssemblyList
     }
     CreateLinkedList()
     {
+        let skipgrid = Array.from(Array(15), () => new Array(8));
         // reset package dropper
         this.grid[this.grid.length - 1][this.grid[0].length - 1].next = this.grid[this.grid.length - 2][this.grid[0].length - 1];
 
@@ -153,48 +154,45 @@ class AssemblyList
         {
             for(let y = 0; y < this.grid[x].length; y++) 
             {
-                let object = this.grid[x][y];
-                if(object != undefined && object.moveable)
+                let assemblyLine = this.grid[x][y];
+                if(assemblyLine != undefined && assemblyLine.moveable)
                 {
-                    object.next = null;
-                    if(object.s == 1)
+                    assemblyLine.next = null;
+                    if(assemblyLine.s == 1) // direction south
                     {
                         if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
-                            object.next = this.grid[x][y+1];
+                        {
+                            assemblyLine.next = this.grid[x][y+1];
+                        }
                         
                         continue;
                     }
-                    if(object.n == 1)
+                    if(assemblyLine.n == 1) // direction north
                     {
                         if(y-1 > 0 && this.grid[x][y-1] != null)
-                            object.next = this.grid[x][y-1];
+                            assemblyLine.next = this.grid[x][y-1];
   
                         continue;
                     }
-                    if (object.w == 1)
+                    if (assemblyLine.w == 1) // direction west
                     {
                         if(x-1 > 0 && this.grid[x-1][y] != undefined)
-                            object.next = this.grid[x-1][y];
+                            assemblyLine.next = this.grid[x-1][y];
                         
                         continue;
                     }
-                    if (object.e == 1)
+                    if (assemblyLine.e == 1) // direction east
                     {
                         if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
-                            object.next = this.grid[x+1][y];
+                        {
+                            assemblyLine.next = this.grid[x+1][y];
+
+                        }
                     
                         continue;
                     }
                 }
             }
-        }
-
-
-
-
-
-
-
-        
+        }      
     }
 }
