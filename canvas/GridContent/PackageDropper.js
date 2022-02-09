@@ -1,14 +1,12 @@
 class PackageDropper
 {
-    constructor()
+    constructor(x,y)
     {
         this.background = "img/packagedropper.png";;
         this.content = null;
         this.next = null;
-        this.s = 0;
-        this.n = 0;
-        this.w = 1;
-        this.e = 0;
+        this.X = x;
+        this.Y = y;
         this.cooldown = 600;
     }
 
@@ -22,7 +20,7 @@ class PackageDropper
             {
                 if (this.next.content == null)
                 {
-                    this.next.content = new Package1();
+                    this.next.content = new Package1(this.X - 1,this.Y);
                 }
             }
         }

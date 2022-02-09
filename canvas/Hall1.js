@@ -10,6 +10,7 @@ class HallOne {
         this.AddParkingSpots();
         this.AddPackageDropper();
         this.updatetimer = 60;
+        this.packageList = Array();
     }
 
     Update()
@@ -52,17 +53,27 @@ class HallOne {
         }
     }
 
-    UpdateGrid()
+
+    UpdatePackages()
+    {
+        for(let i = 0; i < this.packageList.length; i++)
+        {
+
+        }
+    }
+
+    UpdateGrid() // TODO refactor
     {
         this.updatetimer--;
         if(this.updatetimer == 0)
         {
             this.updatetimer = 60;
+            let skipgrid = Array.from(Array(15), () => new Array(8));
             for(let x = 0; x < this.grid.length; x++) 
             {
                 for(let y = 0; y < this.grid[x].length; y++) 
                 {
-                    if (this.grid[x][y] != undefined)
+                    if (this.grid[x][y] != undefined && !skipgrid[x][y])
                     {
                         if (this.grid[x][y].content != null)
                         {
@@ -72,6 +83,8 @@ class HallOne {
                                 {
                                     this.grid[x][y].next.content = this.grid[x][y].content;
                                     this.grid[x][y].content = null;
+                                    if (this.grid[x][y].next != undefined)
+                                        skipgrid[this.grid[x][y].next.X][this.grid[x][y].next.Y] = true;
                                 }
                             }
                         }
@@ -100,7 +113,7 @@ class HallOne {
 
     AddPackageDropper()
     {
-        this.grid[this.grid.length - 1][this.grid[0].length - 1] = new PackageDropper();
+        this.grid[this.grid.length - 1][this.grid[0].length - 1] = new PackageDropper(this.grid.length - 1,this.grid[0].length - 1);
         this.packageDropper = this.grid[this.grid.length - 1][this.grid[0].length - 1];
     }
 

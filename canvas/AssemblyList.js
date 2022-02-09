@@ -102,6 +102,7 @@ class AssemblyList
                 if(this.grid[x][y] == undefined)
                 { 
                     this.grid[x][y] = this.DraggableObject;
+                    this.DraggableObject.SetPosition(x,y);
                     this.CreateLinkedList();
                     this.DraggableObject.posX = e.offsetX - 45;
                     this.DraggableObject.posY = e.offsetY - 45;
@@ -146,7 +147,6 @@ class AssemblyList
     }
     CreateLinkedList()
     {
-        let skipgrid = Array.from(Array(15), () => new Array(8));
         // reset package dropper
         this.grid[this.grid.length - 1][this.grid[0].length - 1].next = this.grid[this.grid.length - 2][this.grid[0].length - 1];
 
@@ -161,9 +161,7 @@ class AssemblyList
                     if(assemblyLine.s == 1) // direction south
                     {
                         if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
-                        {
                             assemblyLine.next = this.grid[x][y+1];
-                        }
                         
                         continue;
                     }
@@ -184,10 +182,7 @@ class AssemblyList
                     if (assemblyLine.e == 1) // direction east
                     {
                         if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
-                        {
                             assemblyLine.next = this.grid[x+1][y];
-
-                        }
                     
                         continue;
                     }
