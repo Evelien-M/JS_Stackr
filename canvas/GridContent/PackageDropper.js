@@ -8,6 +8,8 @@ class PackageDropper
         this.X = x;
         this.Y = y;
         this.cooldown = 600;
+        this.contentPositionX = 45;
+        this.contentPositionY = 30;
     }
 
     Next()
@@ -20,7 +22,7 @@ class PackageDropper
             {
                 if (this.next.content == null)
                 {
-                    this.next.content = new Package1(this.X - 1,this.Y);
+                    this.next.content = new Package1();
                 }
             }
         }

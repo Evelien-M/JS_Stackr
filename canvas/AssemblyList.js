@@ -149,6 +149,10 @@ class AssemblyList
     {
         // reset package dropper
         this.grid[this.grid.length - 1][this.grid[0].length - 1].next = this.grid[this.grid.length - 2][this.grid[0].length - 1];
+        if (this.grid[this.grid.length - 2][this.grid[0].length - 1] != undefined)
+        {
+            this.grid[this.grid.length - 2][this.grid[0].length - 1].previous = this.grid[this.grid.length - 1][this.grid[0].length - 1];
+        }
 
         for(let x = 0; x < this.grid.length; x++) 
         {
@@ -161,28 +165,40 @@ class AssemblyList
                     if(assemblyLine.s == 1) // direction south
                     {
                         if(y+1 != this.grid[0].length && this.grid[x][y+1] != undefined)
+                        {
                             assemblyLine.next = this.grid[x][y+1];
+                            this.grid[x][y+1].previous = assemblyLine;
+                        }
                         
                         continue;
                     }
                     if(assemblyLine.n == 1) // direction north
                     {
                         if(y-1 > 0 && this.grid[x][y-1] != null)
+                        {
                             assemblyLine.next = this.grid[x][y-1];
+                            this.grid[x][y-1].previous = assemblyLine;
+                        }
   
                         continue;
                     }
                     if (assemblyLine.w == 1) // direction west
                     {
                         if(x-1 > 0 && this.grid[x-1][y] != undefined)
+                        {
                             assemblyLine.next = this.grid[x-1][y];
+                            this.grid[x-1][y].previous = assemblyLine;
+                        }
                         
                         continue;
                     }
                     if (assemblyLine.e == 1) // direction east
                     {
                         if(x+1 != this.grid.length && this.grid[x+1][y] != undefined)
+                        {
                             assemblyLine.next = this.grid[x+1][y];
+                            this.grid[x+1][y].previous = assemblyLine;
+                        }
                     
                         continue;
                     }

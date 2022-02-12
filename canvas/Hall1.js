@@ -10,7 +10,6 @@ class HallOne {
         this.AddParkingSpots();
         this.AddPackageDropper();
         this.updatetimer = 60;
-        this.packageList = Array();
     }
 
     Update()
@@ -46,55 +45,63 @@ class HallOne {
                     {
                         let bg2 = new Image(); // Creating image objects
                         bg2.src = this.grid[x][y].content.background;
-                        this.ctx.drawImage(bg2,x * this.cellSize, y * this.cellSize);
+                        this.ctx.drawImage(bg2,x * this.cellSize + this.grid[x][y].contentPositionX, y * this.cellSize + this.grid[x][y].contentPositionY);
                     }
                 }
             }
         }
     }
 
-
-    UpdatePackages()
+    UpdateGrid()
     {
-        for(let i = 0; i < this.packageList.length; i++)
+ 
+        let skipgrid = Array.from(Array(15), () => new Array(8));
+        for(let x = 0; x < this.grid.length; x++) 
         {
-
-        }
-    }
-
-    UpdateGrid() // TODO refactor
-    {
-        this.updatetimer--;
-        if(this.updatetimer == 0)
-        {
-            this.updatetimer = 60;
-            let skipgrid = Array.from(Array(15), () => new Array(8));
-            for(let x = 0; x < this.grid.length; x++) 
+            for(let y = 0; y < this.grid[x].length; y++) 
             {
-                for(let y = 0; y < this.grid[x].length; y++) 
+                let assembly = this.grid[x][y];
+                if (assembly != undefined && !skipgrid[x][y])
                 {
-                    if (this.grid[x][y] != undefined && !skipgrid[x][y])
+                    if (assembly.content != null)
                     {
-                        if (this.grid[x][y].content != null)
+                        assembly.contentPositionX += this.Difference(assembly.contentPositionX,assembly.contentEndPositionX);
+                        assembly.contentPositionY += this.Difference(assembly.contentPositionY,assembly.contentEndPositionY);
+                        if (assembly.next != null)
                         {
-                            if (this.grid[x][y].next != null)
+                            if (assembly.next.content == null && assembly.next.moveable)
                             {
-                                if (this.grid[x][y].next.content == null && this.grid[x][y].next.moveable)
+                                if(assembly.contentPositionX == assembly.contentEndPositionX &&
+                                    assembly.contentPositionY == assembly.contentEndPositionY)
                                 {
-                                    this.grid[x][y].next.content = this.grid[x][y].content;
-                                    this.grid[x][y].content = null;
-                                    if (this.grid[x][y].next != undefined)
+                                    assembly.contentPositionX = 40;
+                                    assembly.contentPositionY = 40;
+                                    assembly.next.content = assembly.content;
+                                    assembly.content = null;
+                                    if (assembly.next != undefined)
                                         skipgrid[this.grid[x][y].next.X][this.grid[x][y].next.Y] = true;
-                                }
+                                }        
                             }
                         }
                     }
                 }
             }
         }
+        
     }
     IsEven(n) {
         return n % 2 == 0;
+     }
+
+     Difference(start,end)
+     {
+        if(start - end < 0)
+            return 1;
+
+        if (start - end > 0)
+            return -1;
+
+        return 0;
      }
 
     AddParkingSpots()
