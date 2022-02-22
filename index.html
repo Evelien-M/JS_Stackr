@@ -3,6 +3,8 @@
     <head>
         <script type="text/javascript" src="canvas/Canvas.js"></script>
         <script type="text/javascript" src="canvas/Hall1.js"></script>
+        <script type="text/javascript" src="canvas/Hall2.js"></script>
+        <script type="text/javascript" src="canvas/Weather.js"></script>
         <script type="text/javascript" src="canvas/GridContent/ParkingSpot.js"></script>
         <script type="text/javascript" src="canvas/AssemblyList.js"></script>
         <script type="text/javascript" src="canvas/GridContent/Assembly/AssemblyLine.js"></script>
@@ -18,7 +20,7 @@
 <body>
 
 <div class="container-fluid">
-
+    
         <canvas id="canvas" style="margin-top: 15px; border:1px solid #000000;">
         Your browser does not support the HTML canvas tag.
         </canvas>
@@ -58,6 +60,10 @@
                   </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
+        </div>
+        <div class="section-town">
+          <input type="text" style="width: 200px;" class="form-control" id="town" value="Amsterdam">
+          <button class="btn btn-primary" onclick="ButtonSetTown()">Update</button>
         </div>
 </div>
 

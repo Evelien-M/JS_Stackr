@@ -9,6 +9,10 @@ class StraightNS extends AssemblyLine
         this.w = 0;
         this.e = 0;
         this.contentEndPositionX = 40;
-        this.contentEndPositionY = 60;
+        this.contentEndPositionY = 75;
+        this.contentStartPositionX = 40;
+        this.contentStartPositionY = -15;
+        this.contentPositionX = 40;
+        this.contentPositionY = -15;
     }
 }

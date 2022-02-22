@@ -74,8 +74,16 @@ class HallOne {
                                 if(assembly.contentPositionX == assembly.contentEndPositionX &&
                                     assembly.contentPositionY == assembly.contentEndPositionY)
                                 {
-                                    assembly.contentPositionX = 40;
-                                    assembly.contentPositionY = 40;
+                                    if(assembly.previous != undefined && assembly.previous.moveable)
+                                    {
+                                        assembly.contentPositionX = assembly.previous.contentStartPositionX;
+                                        assembly.contentPositionY = assembly.previous.contentStartPositionY;
+                                    }
+                                    else
+                                    {
+                                        assembly.contentPositionX = assembly.contentStartPositionX;
+                                        assembly.contentPositionY = assembly.contentStartPositionY;
+                                    }
                                     assembly.next.content = assembly.content;
                                     assembly.content = null;
                                     if (assembly.next != undefined)

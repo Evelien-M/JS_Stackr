@@ -1,6 +1,6 @@
 class AssemblyList
 {
-    constructor(canvasHolder,ctx,grid)
+    constructor(canvasHolder,ctx)
     {
         this.canvasHolder = canvasHolder;
         this.ctx = ctx;
@@ -11,11 +11,16 @@ class AssemblyList
         canvasHolder.onmouseup = (e) => this.MouseUp(e); 
 
         this.DraggableObject = null;
+        this.DraggableObjectContent = null;
+
+        
     }
 
     Update(grid)
     {
         this.grid = grid;
+
+        
     }
     Draw()
     {
@@ -31,6 +36,12 @@ class AssemblyList
             let bg = new Image(); // Creating image objects
             bg.src = this.DraggableObject.background;
             this.ctx.drawImage(bg,this.DraggableObject.posX,this.DraggableObject.posY);
+        }
+        if(this.DraggableObjectContent != null)
+        {
+            let bg = new Image(); // Creating image objects
+            bg.src = this.DraggableObjectContent.background;
+            this.ctx.drawImage(bg,this.DraggableObjectContent.posX,this.DraggableObjectContent.posY);
         }
 
     }
@@ -82,25 +93,34 @@ class AssemblyList
            {
                if(this.grid[x][y].moveable)
                {
-                   this.DraggableObject = this.grid[x][y];
-                   this.DraggableObject.posX = e.offsetX - 45;
-                   this.DraggableObject.posY = e.offsetY - 45;
-                   this.grid[x][y] = undefined;
+                   if(this.grid[x][y].content != null)
+                   {
+                        this.DraggableObjectContent = this.grid[x][y].content;
+                        this.grid[x][y].content = null;
+                   }
+                   else
+                   {
+                       this.DraggableObject = this.grid[x][y];
+                       this.DraggableObject.posX = e.offsetX - 45;
+                       this.DraggableObject.posY = e.offsetY - 45;
+                       this.grid[x][y] = undefined;
+                   }
+                   
                }
            }
         }
     }
     MouseUp(e)
-    {
-        if (this.DraggableObject != null)
-        {
-            if (e.offsetX > 0 && e.offsetX < this.grid.length * 90 &&
-                e.offsetY > 0 && e.offsetY < this.grid[0].length * 90)
-            {    
-                let x = Math.round((e.offsetX - 45) / 90);
-                let y = Math.round((e.offsetY - 45) / 90);
-                if(this.grid[x][y] == undefined)
-                { 
+    { 
+        if (e.offsetX > 0 && e.offsetX < this.grid.length * 90 &&
+            e.offsetY > 0 && e.offsetY < this.grid[0].length * 90)
+        {    
+            let x = Math.round((e.offsetX - 45) / 90);
+            let y = Math.round((e.offsetY - 45) / 90);
+            if(this.grid[x][y] == undefined)
+            { 
+                if (this.DraggableObject != null)
+                {
                     this.grid[x][y] = this.DraggableObject;
                     this.DraggableObject.SetPosition(x,y);
                     this.CreateLinkedList();
@@ -108,17 +128,27 @@ class AssemblyList
                     this.DraggableObject.posY = e.offsetY - 45;
                     this.DraggableObject = null;
                 }
-                
             }
-            else
+            else if (this.DraggableObjectContent != null)
             {
-                this.DraggableObject.posX = 0;
-                this.DraggableObject.posY = 0;
-                this.DraggableObject = null;
+                this.grid[x][y].content = this.DraggableObjectContent;
+                this.DraggableObjectContent = null; 
             }
+            
         }
         
-
+        if(this.DraggableObject != null)
+        {
+            this.DraggableObject.posX = 0;
+            this.DraggableObject.posY = 0;
+            this.DraggableObject = null;
+        }
+        if (this.DraggableObjectContent != null)
+        {
+            this.DraggableObjectContent.posX = 0;
+            this.DraggableObjectContent.posY = 0;
+            this.DraggableObjectContent = null; 
+        }
     }
 
     MouseMove(e)
@@ -127,6 +157,11 @@ class AssemblyList
         {
             this.DraggableObject.posX = e.offsetX - 45;
             this.DraggableObject.posY = e.offsetY - 45;
+        }
+        if (this.DraggableObjectContent != null)
+        {
+            this.DraggableObjectContent.posX = e.offsetX - 15;
+            this.DraggableObjectContent.posY = e.offsetY - 15;
         }
     }
 

@@ -8,7 +8,11 @@ class StraightWE extends AssemblyLine
         this.n = 0;
         this.w = -1;
         this.e = 1;
-        this.contentEndPositionX = 60;
+        this.contentEndPositionX = 65;
         this.contentEndPositionY = 40;
+        this.contentStartPositionX = -15;
+        this.contentStartPositionY = 40;
+        this.contentPositionX = -15;
+        this.contentPositionY = 40;
     }
 }
