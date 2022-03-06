@@ -3,13 +3,12 @@ class HallOne {
     {
         this.canvasHolder = canvasHolder;
         this.ctx = ctx;
-
+        this.name = "Hall one";
         this.parkingspots = Array(8);
         this.grid = Array.from(Array(15), () => new Array(8));
         this.cellSize = 90;
         this.AddParkingSpots();
         this.AddPackageDropper();
-        this.updatetimer = 60;
     }
 
     Update()
@@ -21,6 +20,7 @@ class HallOne {
     {
         this.DrawParkingSpot();
         this.DrawGrid();
+        this.DrawPackage();
     }
 
     DrawGrid()
@@ -41,17 +41,39 @@ class HallOne {
                     let bg = new Image(); // Creating image objects
                     bg.src = this.grid[x][y].background;
                     this.ctx.drawImage(bg,x * this.cellSize, y * this.cellSize);
-                    if (this.grid[x][y].content != null)
-                    {
-                        let bg2 = new Image(); // Creating image objects
-                        bg2.src = this.grid[x][y].content.background;
-                        this.ctx.drawImage(bg2,x * this.cellSize + this.grid[x][y].contentPositionX, y * this.cellSize + this.grid[x][y].contentPositionY);
-                    }
                 }
             }
         }
     }
 
+    DrawPackage()
+    {
+        for(let x = 0; x < this.grid.length; x++) 
+        {
+            for(let y = 0; y < this.grid[x].length; y++) 
+            {
+                if (this.grid[x][y] != undefined && this.grid[x][y].content != null)
+                {
+                    let packageContent = this.grid[x][y].content;
+                    for(let x1 = 0; x1 < packageContent.grid.length; x1++) 
+                    {
+                        for(let y1 = 0; y1 < packageContent.grid[x1].length; y1++) 
+                        {
+                            if(packageContent.grid[x1][y1])
+                            {
+                                this.ctx.beginPath();
+                                this.ctx.strokeStyle = "green";
+                                this.ctx.fillStyle = packageContent.color;
+                                this.ctx.fillRect(x * this.cellSize + this.grid[x][y].contentPositionX + (x1 * 15), y * this.cellSize + this.grid[x][y].contentPositionY + (y1 * 15), 15, 15);
+                                this.ctx.rect(x * this.cellSize + this.grid[x][y].contentPositionX + (x1 * 15), y * this.cellSize + this.grid[x][y].contentPositionY + (y1 * 15), 15, 15);
+                                this.ctx.stroke();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } 
     UpdateGrid()
     {
  

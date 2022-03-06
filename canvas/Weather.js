@@ -1,8 +1,8 @@
 class Weather
 {
-    constructor(canvasholder,ctx)
+    constructor(canvasHolder,ctx)
     {
-        this.canvasholder = canvasholder;
+        this.canvasHolder = canvasHolder;
         this.ctx = ctx;
     }
 
@@ -24,17 +24,17 @@ class Weather
             this.ctx.fillStyle = "#FFFFFF";
             if (this.data["cod"] != 200)
             {
-                this.ctx.fillText(this.data["message"], this.canvasholder.width - 200, this.canvasholder.height - 50);
+                this.ctx.fillText(this.data["message"], this.canvasHolder.width - 200, this.canvasHolder.height - 50);
             }
             else
             {
-                this.ctx.fillText(this.data["main"]["temp"] + " C", this.canvasholder.width - 200, this.canvasholder.height - 50);
+                this.ctx.fillText(this.data["main"]["temp"] + " C", this.canvasHolder.width - 200, this.canvasHolder.height - 50);
                 this.ctx.font = "20px Arial";
-                this.ctx.fillText(this.data["weather"][0]["main"], this.canvasholder.width - 200, this.canvasholder.height - 20);
+                this.ctx.fillText(this.data["weather"][0]["main"], this.canvasHolder.width - 200, this.canvasHolder.height - 20);
                 let bg = new Image(); // Creating image objects
                 let iconcode = this.data["weather"][0]["icon"];
                 bg.src = "http://openweathermap.org/img/w/" + iconcode + ".png";
-                this.ctx.drawImage(bg,this.canvasholder.width - 60, this.canvasholder.height - 80);
+                this.ctx.drawImage(bg,this.canvasHolder.width - 60, this.canvasHolder.height - 80);
             }
         }
     }

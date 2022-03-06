@@ -19,8 +19,6 @@ class AssemblyList
     Update(grid)
     {
         this.grid = grid;
-
-        
     }
     Draw()
     {
@@ -39,9 +37,22 @@ class AssemblyList
         }
         if(this.DraggableObjectContent != null)
         {
-            let bg = new Image(); // Creating image objects
-            bg.src = this.DraggableObjectContent.background;
-            this.ctx.drawImage(bg,this.DraggableObjectContent.posX,this.DraggableObjectContent.posY);
+            for(let x1 = 0; x1 < this.DraggableObjectContent.grid.length; x1++) 
+            {
+                for(let y1 = 0; y1 < this.DraggableObjectContent.grid[x1].length; y1++) 
+                {
+                    if(this.DraggableObjectContent.grid[x1][y1])
+                    {
+                        this.ctx.beginPath();
+                        this.ctx.strokeStyle = "green";
+                        this.ctx.fillStyle = this.DraggableObjectContent.color;
+                        this.ctx.fillRect(this.DraggableObjectContent.posX + (x1 * 15), this.DraggableObjectContent.posY + (y1 * 15), 15, 15);
+                        this.ctx.rect(this.DraggableObjectContent.posX + (x1 * 15), this.DraggableObjectContent.posY + (y1 * 15), 15, 15);
+                        this.ctx.stroke();
+                    }
+                }
+            }
+           
         }
 
     }

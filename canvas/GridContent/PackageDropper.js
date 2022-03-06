@@ -22,9 +22,31 @@ class PackageDropper
             {
                 if (this.next.content == null)
                 {
-                    this.next.content = new Package1();
+                    let rng = Math.floor(Math.random() * 6);
+                    this.next.content = this.GetPackage(rng);
                 }
             }
+        }
+    }
+
+    GetPackage(index)
+    {
+        switch(index)
+        {
+            case 0:
+                return new Package1();
+            case 1:
+                return new Package2();
+            case 2:
+                return new Package3();
+            case 3:
+                return new Package4();
+            case 4:
+                return new Package5();
+            case 5:
+                return new Package6();
+            case 6:
+                return new Package7();
         }
     }
 }
