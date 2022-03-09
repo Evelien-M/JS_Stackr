@@ -16,17 +16,13 @@ class HallOne {
         this.packageDropper.Next();
         this.UpdateGrid();
         this.parkingspots.forEach(element => {
-            if (element != undefined)
-            {
-                element.Update();
-            }
+            element.Update();
         });
     }
     Draw()
     {
         this.DrawGrid();
         this.DrawPackage();
-        this.DrawParkingSpot();
     }
 
     DrawGrid()
@@ -44,9 +40,7 @@ class HallOne {
 
                 if (this.grid[x][y] != undefined)
                 {
-                    let bg = new Image(); // Creating image objects
-                    bg.src = this.grid[x][y].background;
-                    this.ctx.drawImage(bg,x * this.cellSize, y * this.cellSize);
+                    this.grid[x][y].Draw(this.ctx, this.cellSize); 
                 }
             }
         }
@@ -83,21 +77,6 @@ class HallOne {
             }
         }
     } 
-
-    DrawParkingSpot()
-    {
-        this.parkingspots.forEach(element => {
-            if (element != undefined)
-            {
-                this.ctx.fillStyle = "#000000";
-                this.ctx.fillText(element.countdown, element.x * this.cellSize + 30, element.y * this.cellSize);
-                if(element.showTruck)
-                {
-                    element.content.Draw(element.x,element.y,this.cellSize);
-                }
-            }
-        });
-    }
 
     UpdateGrid()
     {
@@ -185,7 +164,6 @@ class HallOne {
 
     AddTruck(truck)
     {
-        console.log(this.parkingspots);
         for(let i = 0; i < this.parkingspots.length; i++)
         {
             if(this.parkingspots[i].content == null)

@@ -76,6 +76,7 @@ class AssemblyList
                 let bg = new Image(); // Creating image objects
                 bg.src = this.list[i].background;
                 this.ctx.drawImage(bg,i * 90,this.canvasHolder.height - 90);
+                
             }
         }
     }

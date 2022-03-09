@@ -11,6 +11,20 @@ class ParkingsSpot
         this.showTruck = false;
     }
 
+    Draw(ctx,cellSize)
+    {
+        let bg = new Image(); // Creating image objects
+        bg.src = this.background;
+        ctx.drawImage(bg,this.x * cellSize, this.y * cellSize);
+
+        ctx.fillStyle = "#000000";
+        ctx.fillText(this.countdown, this.x * cellSize + 30, this.y * cellSize);
+        if(this.showTruck)
+        {
+            this.content.Draw(cellSize);
+        }
+    }
+
     Update()
     {
         this.timer--;
@@ -31,5 +45,6 @@ class ParkingsSpot
     {
         this.countdown = truck.intervall;
         this.content = truck;
+        truck.SetPosition(this.x,this.y);
     }
 }

@@ -12,6 +12,13 @@ class PackageDropper
         this.contentPositionY = 30;
     }
 
+    Draw(ctx,cellSize)
+    {
+        let bg = new Image(); // Creating image objects
+        bg.src = this.background;
+        ctx.drawImage(bg,this.X * cellSize, this.Y * cellSize);
+    }
+
     Next()
     {
         this.cooldown--;
