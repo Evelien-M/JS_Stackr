@@ -4,7 +4,7 @@ class HallOne {
         this.canvasHolder = canvasHolder;
         this.ctx = ctx;
         this.name = "Hall one";
-        this.parkingspots = Array(8);
+        this.parkingspots = Array(0);
         this.grid = Array.from(Array(15), () => new Array(8));
         this.cellSize = 90;
         this.AddParkingSpots();
@@ -15,12 +15,18 @@ class HallOne {
     {
         this.packageDropper.Next();
         this.UpdateGrid();
+        this.parkingspots.forEach(element => {
+            if (element != undefined)
+            {
+                element.Update();
+            }
+        });
     }
     Draw()
     {
-        this.DrawParkingSpot();
         this.DrawGrid();
         this.DrawPackage();
+        this.DrawParkingSpot();
     }
 
     DrawGrid()
@@ -55,18 +61,21 @@ class HallOne {
                 if (this.grid[x][y] != undefined && this.grid[x][y].content != null)
                 {
                     let packageContent = this.grid[x][y].content;
-                    for(let x1 = 0; x1 < packageContent.grid.length; x1++) 
+                    if(packageContent.grid != undefined)
                     {
-                        for(let y1 = 0; y1 < packageContent.grid[x1].length; y1++) 
+                        for(let x1 = 0; x1 < packageContent.grid.length; x1++) 
                         {
-                            if(packageContent.grid[x1][y1])
+                            for(let y1 = 0; y1 < packageContent.grid[x1].length; y1++) 
                             {
-                                this.ctx.beginPath();
-                                this.ctx.strokeStyle = "green";
-                                this.ctx.fillStyle = packageContent.color;
-                                this.ctx.fillRect(x * this.cellSize + this.grid[x][y].contentPositionX + (x1 * 15), y * this.cellSize + this.grid[x][y].contentPositionY + (y1 * 15), 15, 15);
-                                this.ctx.rect(x * this.cellSize + this.grid[x][y].contentPositionX + (x1 * 15), y * this.cellSize + this.grid[x][y].contentPositionY + (y1 * 15), 15, 15);
-                                this.ctx.stroke();
+                                if(packageContent.grid[x1][y1])
+                                {
+                                    this.ctx.beginPath();
+                                    this.ctx.strokeStyle = "green";
+                                    this.ctx.fillStyle = packageContent.color;
+                                    this.ctx.fillRect(x * this.cellSize + this.grid[x][y].contentPositionX + (x1 * 15), y * this.cellSize + this.grid[x][y].contentPositionY + (y1 * 15), 15, 15);
+                                    this.ctx.rect(x * this.cellSize + this.grid[x][y].contentPositionX + (x1 * 15), y * this.cellSize + this.grid[x][y].contentPositionY + (y1 * 15), 15, 15);
+                                    this.ctx.stroke();
+                                }
                             }
                         }
                     }
@@ -74,6 +83,22 @@ class HallOne {
             }
         }
     } 
+
+    DrawParkingSpot()
+    {
+        this.parkingspots.forEach(element => {
+            if (element != undefined)
+            {
+                this.ctx.fillStyle = "#000000";
+                this.ctx.fillText(element.countdown, element.x * this.cellSize + 30, element.y * this.cellSize);
+                if(element.showTruck)
+                {
+                    element.content.Draw(element.x,element.y,this.cellSize);
+                }
+            }
+        });
+    }
+
     UpdateGrid()
     {
  
@@ -142,7 +167,9 @@ class HallOne {
             {
                 if(this.IsEven(x))
                 {
-                    this.grid[x][y] = new ParkingsSpot();
+                    this.grid[x][y] = new ParkingsSpot(x,y);
+                    if (y == 1)
+                        this.parkingspots.push(this.grid[x][1]);
                 }
             }
         }
@@ -154,11 +181,20 @@ class HallOne {
         this.packageDropper = this.grid[this.grid.length - 1][this.grid[0].length - 1];
     }
 
-    DrawParkingSpot()
+
+
+    AddTruck(truck)
     {
-        this.ctx.beginPath();   
-        
-        this.ctx.fillStyle = "#BBB"; 
-        this.ctx.fillRect(0, 0, this.canvasHolder.width, this.canvasHolder.height / 4);
+        console.log(this.parkingspots);
+        for(let i = 0; i < this.parkingspots.length; i++)
+        {
+            if(this.parkingspots[i].content == null)
+            {
+                this.parkingspots[i].AddTruck(truck);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

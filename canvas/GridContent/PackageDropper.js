@@ -22,7 +22,7 @@ class PackageDropper
             {
                 if (this.next.content == null)
                 {
-                    let rng = Math.floor(Math.random() * 6);
+                    let rng = Math.floor(Math.random() * 7);
                     this.next.content = this.GetPackage(rng);
                 }
             }

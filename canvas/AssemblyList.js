@@ -220,7 +220,7 @@ class AssemblyList
                     }
                     if(assemblyLine.n == 1) // direction north
                     {
-                        if(y-1 > 0 && this.grid[x][y-1] != null)
+                        if(y-1 >= 0 && this.grid[x][y-1] != null)
                         {
                             assemblyLine.next = this.grid[x][y-1];
                             this.grid[x][y-1].previous = assemblyLine;
@@ -230,7 +230,7 @@ class AssemblyList
                     }
                     if (assemblyLine.w == 1) // direction west
                     {
-                        if(x-1 > 0 && this.grid[x-1][y] != undefined)
+                        if(x-1 >= 0 && this.grid[x-1][y] != undefined)
                         {
                             assemblyLine.next = this.grid[x-1][y];
                             this.grid[x-1][y].previous = assemblyLine;

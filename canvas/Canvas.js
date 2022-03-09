@@ -47,7 +47,6 @@ function GetData()
     if(this.town != this.town2)
     {
         this.town2 = this.town;
-        this.weatherData = undefined;
         this.weather.UpdateWeather(town);
     }
 }
@@ -66,5 +65,53 @@ function ButtonSwitchHall()
     else
     {
         this.start = this.hallone;
+    }
+}
+
+function ButtonForm()
+{
+    let length = document.getElementById("inputLength").value;
+    if(length < 4 || length > 10)
+    {
+        alert("De lengte heeft een onjuiste waarde");
+        return;
+    }
+    let width = document.getElementById("inputWidth").value;
+    if(width < 4 || width > 6)
+    {
+        alert("De breedte heeft een onjuiste waarde");
+        return;
+    }
+    let interval = document.getElementById("intervall").value;
+    if(interval <= 0 || interval > 200)
+    {
+        alert("Interval heeft een onjuiste waarde")
+        return;
+    }
+    let weather = this.weather.data;
+    if (weather == undefined || weather.cod != 200)
+    {
+        alert("Er is iets fouts gegaan met de weatherdata")
+        return;
+    }
+    let type = document.getElementById("type").value;
+    if (type == "cold" && weather["main"]["temp"] >= 35)
+    {
+        alert("Het is te warm om koud transport te laten rijden");
+        return;
+    }
+    if (type == "fragile" && weather["weather"][0]["main"] == "Rain" || 
+    type == "fragile" && weather["weather"][0]["main"] == "Shower rain" || 
+    type == "fragile" && weather["weather"][0]["main"] == "Snow")
+    {
+        alert("Het is te slecht weer om breekbaar transport te laten rijden");
+        return;
+    }
+    let actionradius = document.getElementById("actionradius").value;
+    let truck = new Truck(this.ctx,width,length,interval,type,actionradius);
+    if(!this.start.AddTruck(truck))
+    {
+        alert("Er is niet genoeg ruimte");
+        return;
     }
 }
