@@ -116,6 +116,17 @@ class HallOne {
                                         skipgrid[this.grid[x][y].next.X][this.grid[x][y].next.Y] = true;
                                 }        
                             }
+                            else if (assembly.next.isParkingSpot)
+                            {
+                                // there is a truck on the parkingspot
+                                if(assembly.next.showTruck)
+                                {
+                                    if(assembly.next.content.AddPackage(assembly.content))
+                                    {
+                                        assembly.content = null;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -10,6 +10,7 @@ class PackageDropper
         this.cooldown = 600;
         this.contentPositionX = 45;
         this.contentPositionY = 30;
+        this.isParkingSpot = false;
     }
 
     Draw(ctx,cellSize)

@@ -141,10 +141,24 @@ class AssemblyList
                     this.DraggableObject = null;
                 }
             }
+            // place package on assemblyline
             else if (this.DraggableObjectContent != null)
             {
-                this.grid[x][y].content = this.DraggableObjectContent;
-                this.DraggableObjectContent = null; 
+                if (this.grid[x][y].isParkingSpot)
+                {
+                    if(this.grid[x][y].content != null)
+                    {
+                        if(this.grid[x][y].content.AddPackage(this.DraggableObjectContent))
+                        {
+                            this.DraggableObjectContent = null; 
+                        }
+                    }
+                }
+                else
+                {
+                    this.grid[x][y].content = this.DraggableObjectContent;
+                    this.DraggableObjectContent = null; 
+                }
             }
             
         }
@@ -154,12 +168,6 @@ class AssemblyList
             this.DraggableObject.posX = 0;
             this.DraggableObject.posY = 0;
             this.DraggableObject = null;
-        }
-        if (this.DraggableObjectContent != null)
-        {
-            this.DraggableObjectContent.posX = 0;
-            this.DraggableObjectContent.posY = 0;
-            this.DraggableObjectContent = null; 
         }
     }
 

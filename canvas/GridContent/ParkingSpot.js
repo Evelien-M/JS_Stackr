@@ -9,6 +9,7 @@ class ParkingsSpot
         this.countdown = 0;
         this.timer = 60;
         this.showTruck = false;
+        this.isParkingSpot = true;
     }
 
     Draw(ctx,cellSize)
@@ -39,6 +40,10 @@ class ParkingsSpot
                     this.showTruck = true;
                 }
             }
+        }
+        if(this.showTruck)
+        {
+            this.content.Update();
         }
     }
     AddTruck(truck)

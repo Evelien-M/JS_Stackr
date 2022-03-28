@@ -7,6 +7,7 @@ class AssemblyLine
         this.previous = null;
         this.moveable = true;
         this.grid = Array.from(Array(6), () => new Array(6));
+        this.isParkingSpot = false;
     }
 
     Draw(ctx,cellSize)
