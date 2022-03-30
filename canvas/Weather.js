@@ -12,7 +12,6 @@ class Weather
         .then(data => data.json())
         .then(data => {
             this.data = data;
-            console.log(data);
         })
     }
 

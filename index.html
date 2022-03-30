@@ -6,6 +6,7 @@
         <script type="text/javascript" src="canvas/Hall2.js"></script>
         <script type="text/javascript" src="canvas/Truck.js"></script>
         <script type="text/javascript" src="canvas/Weather.js"></script>
+        <script type="text/javascript" src="canvas/CityRadius.js"></script>
         <script type="text/javascript" src="canvas/GridContent/ParkingSpot.js"></script>
         <script type="text/javascript" src="canvas/AssemblyList.js"></script>
         <script type="text/javascript" src="canvas/GridContent/Assembly/AssemblyLine.js"></script>
@@ -64,7 +65,7 @@
           </div>
           <div class="form-group">
               <label for="exampleInputPassword1">Actieradius</label>
-              <input type="text" class="form-control" id="actionradius">
+              <input type="number" min="0" max="100" class="form-control" id="actionradius">
             </div>
           <button type="submit" class="btn btn-primary" onclick="ButtonForm()">Submit</button>
         </div>

@@ -148,10 +148,8 @@ class AssemblyList
                 {
                     if(this.grid[x][y].content != null)
                     {
-                        if(this.grid[x][y].content.AddPackage(this.DraggableObjectContent))
-                        {
-                            this.DraggableObjectContent = null; 
-                        }
+                        this.grid[x][y].content.AddPackage(this.DraggableObjectContent);
+                        this.DraggableObjectContent = null; 
                     }
                 }
                 else
@@ -182,6 +180,28 @@ class AssemblyList
         {
             this.DraggableObjectContent.posX = e.offsetX - 15;
             this.DraggableObjectContent.posY = e.offsetY - 15;
+        }
+
+        let x = Math.round((e.offsetX - 45) / 90);
+        let y = Math.round((e.offsetY - 45) / 90);
+        if(this.grid[x] != undefined)
+        {
+            if(this.grid[x][y] != undefined)
+            {
+                if(this.grid[x][y].isParkingSpot)
+                {
+                    if(this.grid[x][y].content != null)
+                    {
+                        this.grid[x][y].content.showRadius = true;
+                        this.hoverTruck = this.grid[x][y].content;
+                        return;
+                    }
+                }
+            }
+        }
+        if(this.hoverTruck != undefined)
+        {
+            this.hoverTruck.showRadius = false;
         }
     }
 

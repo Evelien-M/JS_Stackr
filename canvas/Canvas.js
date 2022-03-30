@@ -108,7 +108,12 @@ function ButtonForm()
         return;
     }
     let actionradius = document.getElementById("actionradius").value;
-    let truck = new Truck(this.ctx,width,length,interval,type,actionradius);
+    if(actionradius <= 0 || actionradius > 100)
+    {
+        alert("actionradius heeft een onjuiste waarde")
+        return;
+    }
+    let truck = new Truck(this.ctx,width,length,interval,type,actionradius,this.weather);
     if(!this.start.AddTruck(truck))
     {
         alert("Er is niet genoeg ruimte");

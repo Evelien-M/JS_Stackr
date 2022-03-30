@@ -1,6 +1,6 @@
 class Truck 
 {
-    constructor(ctx,width,length,intervall,type,actionradius)
+    constructor(ctx,width,length,intervall,type,actionradius,weather)
     {
         this.ctx = ctx;
         this.width = width;
@@ -8,35 +8,65 @@ class Truck
         this.intervall = intervall;
         this.type = type;
         this.actionradius = actionradius;
+        this.weather = weather;
+
         this.cellSize = 15;
         this.grid = Array.from(Array(parseInt(this.width)), () => new Array(parseInt(this.length)));
         this.maxAmountPackage = Math.floor((this.width * this.length) / 4);
+        this.maxSealLength = this.length * this.cellSize;
+        this.currentSealLength = 0;
         this.loaded = false;
+        this.departed = false;
+        this.yPosition = -200;
+        this.color = this.GetColor(this.type);
+        this.nearbyCities = new CityRadius(actionradius,this.weather);
+        this.showRadius = false;
     }
 
     Update()
     {
+        // truck is arriving
+        if(this.yPosition < 0 && !this.loaded)
+        {
+            this.yPosition++;
+        }
         if(this.maxAmountPackage == 0 && !this.loaded)
         {
-            
+            this.currentSealLength++
+            if(this.currentSealLength == this.maxSealLength)
+            {
+                this.loaded = true;
+            }
+        }
+        if(this.loaded && !this.departed)
+        {
+            this.yPosition--;
+            if(this.yPosition == -300)
+            {
+                this.departed = true;
+            }
         }
     }
     Draw(cellSize)
     {
         this.ctx.fillStyle = "#333333";
-        this.ctx.fillRect(this.posX * cellSize, this.posY, this.width * this.cellSize, 30);
+        this.ctx.fillRect(this.posX * cellSize, this.yPosition, this.width * this.cellSize, 30);
         this.ctx.fillStyle = "#CCCCCC";
-        this.ctx.fillRect(this.posX * cellSize, this.posY + 30, this.width * this.cellSize, this.length * 15);
-        this.ctx.fillStyle = "#000000";
-        this.ctx.fillRect(this.posX * cellSize + this.width * this.cellSize - 15, this.posY, this.cellSize, 30);
-        this.ctx.fillRect(this.posX * cellSize, this.posY, 15, 30);
-
+        this.ctx.fillRect(this.posX * cellSize, this.yPosition + 30, this.width * this.cellSize, this.length * 15);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(this.posX * cellSize + this.width * this.cellSize - 15, this.yPosition, this.cellSize, 30);
+        this.ctx.fillRect(this.posX * cellSize, this.yPosition, 15, 30);
+        
         this.ctx.font = "30px Arial";
         this.ctx.fillStyle = "#FFFFFF";
-        ctx.fillText(this.maxAmountPackage, this.posX * cellSize + 30, this.posY * cellSize - 60);
+        this.ctx.beginPath();  
+        this.ctx.fillText(this.maxAmountPackage, this.posX * cellSize + 30, this.yPosition + 30);
 
         this.DrawGrid(cellSize);
         this.DrawPackage(cellSize);
+        this.DrawSeal(cellSize);
+        this.DrawActionRadius(cellSize);
+
     }
 
     DrawGrid(cellSize)
@@ -47,7 +77,7 @@ class Truck
             {
                 this.ctx.beginPath();   
                 this.ctx.strokeStyle = 'green'; 
-                this.ctx.strokeRect((this.posX * cellSize) + x * this.cellSize, y * this.cellSize + 30, this.cellSize, this.cellSize);
+                this.ctx.strokeRect((this.posX * cellSize) + x * this.cellSize, y * this.cellSize + 30 + this.yPosition, this.cellSize, this.cellSize + this.yPosition);
             }
         }
     }
@@ -62,12 +92,44 @@ class Truck
                 {
                     this.ctx.beginPath();   
                     this.ctx.fillStyle = this.grid[x][y].color; 
-                    this.ctx.fillRect((this.posX * cellSize) + x * this.cellSize, y * this.cellSize + 30, this.cellSize, this.cellSize);
+                    this.ctx.fillRect((this.posX * cellSize) + x * this.cellSize, y * this.cellSize + 30 + this.yPosition, this.cellSize, this.cellSize);
                 }
             }
         }
     }
 
+    DrawSeal(cellSize)
+    {
+        this.ctx.beginPath();   
+        this.ctx.fillStyle = this.color; 
+        this.ctx.fillRect(this.posX * cellSize, this.yPosition + 30, this.width * this.cellSize,  this.currentSealLength);
+    }
+
+    DrawActionRadius(cellSize)
+    {
+        if(this.showRadius)
+        {   
+            this.ctx.beginPath();   
+            this.ctx.fillStyle = '#CCCCCC'; 
+            this.ctx.fillRect(this.posX * cellSize, cellSize * 2 + 15, cellSize * 2, 500);
+        
+            let data = this.nearbyCities.data;
+            if(data != undefined)
+            {
+                for(let y = 0; y < data["geonames"].length; y++)
+                {
+                    this.ctx.fillStyle = '#000000';
+                    ctx.font = "22px Arial";
+                    this.ctx.fillText(data["geonames"][y]["name"], this.posX * cellSize, (cellSize * 2) + 30 + (y * 20));
+                }
+            }
+        }
+    }
+
+    MouseMove(e)
+    {
+        console.log(e);
+    }
     SetPosition(x,y)
     {
         this.posX = x;
@@ -115,5 +177,23 @@ class Truck
 
         this.maxAmountPackage--;
         return true;
+    }
+
+    GetColor(type)
+    {
+        switch(type)
+        {
+            case "cold":
+                return "#0000FF";
+            case "fragile":
+                return "#FF0000"
+            case "common":
+                return "#FF00FF";
+            case "pallets":
+                return "#F5AA53";
+            case "fast":
+                return "#FFFF00";
+        }
+        return "#FFFFFF";
     }
 }

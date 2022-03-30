@@ -9,6 +9,7 @@ class HallOne {
         this.cellSize = 90;
         this.AddParkingSpots();
         this.AddPackageDropper();
+        this.loadingYPosition = 0;
     }
 
     Update()
@@ -22,6 +23,7 @@ class HallOne {
     Draw()
     {
         this.DrawGrid();
+        this.DrawGridContent();
         this.DrawPackage();
     }
 
@@ -37,7 +39,16 @@ class HallOne {
         
                 this.ctx.strokeStyle = 'green'; 
                 this.ctx.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+            }
+        }
+    }
 
+    DrawGridContent()
+    {
+        for(let x = 0; x < this.grid.length; x++) 
+        {
+            for(let y = 0; y < this.grid[x].length; y++) 
+            {
                 if (this.grid[x][y] != undefined)
                 {
                     this.grid[x][y].Draw(this.ctx, this.cellSize); 
@@ -80,8 +91,7 @@ class HallOne {
 
     UpdateGrid()
     {
- 
-        let skipgrid = Array.from(Array(15), () => new Array(8));
+        let skipgrid = Array.from(Array(this.grid.length), () => new Array(this.grid[0].length));
         for(let x = 0; x < this.grid.length; x++) 
         {
             for(let y = 0; y < this.grid[x].length; y++) 
@@ -118,13 +128,9 @@ class HallOne {
                             }
                             else if (assembly.next.isParkingSpot)
                             {
-                                // there is a truck on the parkingspot
-                                if(assembly.next.showTruck)
+                                if(assembly.next.LoadUpTruck(assembly.content))
                                 {
-                                    if(assembly.next.content.AddPackage(assembly.content))
-                                    {
-                                        assembly.content = null;
-                                    }
+                                    assembly.content = null;
                                 }
                             }
                         }
